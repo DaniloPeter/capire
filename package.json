@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@cap-js-community/odata-v2-adapter": "^1.14.0",
     "@sap/cds": "^8",
     "express": "^4",
     "ui5-cap-serverside-rendering-plugin": "^1.0.2"
