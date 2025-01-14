@@ -9,10 +9,10 @@ entity Employees@(ServerSideRenderingType:'view'):ServerSideRendering {
   Title : String;
   TitleOfCourtesy : String;
   BirthDate : Date;
-  HireDate : Date; 
+  HireDate : Date;
   Address : String;
   City : String;
-  Region : String; 
+  Region : String;
   PostalCode : String;
   Country : String;
   HomePhone : String;

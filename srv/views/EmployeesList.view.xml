@@ -1,136 +1,47 @@
 <mvc:View controllerName="be.wl.serversiderendering.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.f"
+    xmlns:m="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:fb="sap.ui.comp.filterbar">
-    <f:DynamicPage id="listpage" showFooter="true" headerPinned="true">
-        <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <f:content>
-                    <!-- Фильтры -->
-                    <fb:FilterBar
-                        visible="{= !${data>/editMode}}"
-                        id="filterBar"
-                        showClearOnFB="true"
-                        showRestoreOnFB="true"
-                        showFilterConfiguration="false"
-                        useToolbar="false"
-                        search=".onSearch"
-                        clear=".onClear"
-                        reset=".onReset"
-                    >
-                        <fb:filterGroupItems>
-                            <fb:FilterGroupItem name="LastName"
-                                groupName="Employees"
-                                visibleInFilterBar="true">
-                                <fb:control>
-                                    <Input id="LastNameField" placeholder="Фамилия" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem name="FirstName"
-                                groupName="Employees"
-                                visibleInFilterBar="true">
-                                <fb:control>
-                                    <Input id="FirstNameField" placeholder="Имя" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem name="Title"
-                                groupName="Employees"
-                                visibleInFilterBar="true">
-                                <fb:control>
-                                    <Input id="TitleField" placeholder="Название" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem name="BirthDate"
-                                visibleInFilterBar="true" groupName="Employees">
-                                <fb:control>
-                                    <DatePicker id="startDate"
-                                        change=".onDateChange"
-                                        placeholder="Дата рождения"
-                                        value="{data>/startDate}"
-                                        displayFormat="dd.MM.yyyy" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-
-                            <fb:FilterGroupItem name="HireDate"
-                                visibleInFilterBar="true" groupName="Employees">
-                                <fb:control>
-                                    <DatePicker id="endDate"
-                                        change="onDateChange"
-                                        placeholder="Дата начала работы"
-                                        value="{data>/endDate}"
-                                        displayFormat="dd.MM.yyyy" />
-                                </fb:control>
-                            </fb:FilterGroupItem>
-
-                        </fb:filterGroupItems>
-                    </fb:FilterBar>
-                </f:content>
-            </f:DynamicPageHeader>
-        </f:header>
-
-        <!-- Таблица задач -->
-        <f:content>
-            <Table id="taskListTable" width="auto" items="{{Employees}}">
-                <headerToolbar>
-                    <Toolbar>
-                        <Title text="Задачи" />
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add"
-                            press=".onAddData" enabled="{= ${data>/editMode}}" />
-                        <Button icon="sap-icon://edit"
-                            press=".onUpdateData" enabled="{= ${data>/editMode}}" />
-                        <Button icon="sap-icon://delete"
-                            press=".onDeleteData" enabled="{= ${data>/editMode}}" />
-                        <Button icon="sap-icon://action-settings"
-                            press=".onSettings" enabled="{= !${data>/editMode}}" />
-                    </Toolbar>
-                </headerToolbar>
-                <columns>
-                    <Column visible="{columnVisibility>/taskName}">
-                        <Text text="Фамилия" />
-                    </Column>
-                    <Column visible="{columnVisibility>/taskType}">
-                        <Text text="Имя" />
-                    </Column>
-                    <Column visible="{columnVisibility>/responsible}">
-                        <Text text="Название" />
-                    </Column>
-                    <Column visible="{columnVisibility>/startDate}">
-                        <Text text="Дата Рождения" />
-                    </Column>
-                    <Column visible="{columnVisibility>/endDate}">
-                        <Text text="Дата Приема" />
-                    </Column>
-                    <Column visible="{data>/deleteMode}">
-                        <Text text="Удаление" />
-                    </Column>
-                </columns>
-                <items>{{#each Employees}} <ColumnListItem>
-                        <cells>
-                            <Input
-                                value="{{LastName}}" />
-                            <Input
-                                value="{{FirstName}}" />
-                            <Input
-                                value="{{Title}}" />
-                            <DatePicker
-                                value="{{BirthDate}}"
-                            />
-                            <DatePicker
-                                value="{{HireDate}}"
-                            />
-                            <CheckBox />
-                        </cells>
-                    </ColumnListItem>
-                    {{/each}} </items>
-            </Table>
-        </f:content>
-        <f:footer>
-        </f:footer>
-    </f:DynamicPage>
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:sfb="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:sv="sap.ui.comp.smartvariants"
+    height="100%">
+    <DynamicPage id="dynamicPage" fitContent="true">
+        <header>
+            <DynamicPageHeader>
+                <sfb:SmartFilterBar
+                    id="smartFilterBar"
+                    entitySet="Employees"
+                    enableBasicSearch="true"
+                    basicSearchFieldName="LastName"
+                    persistencyKey="UniqueAndStablePersistencyKey">
+                    <sfb:customData>
+                        <core:CustomData key="defaultFilterBarExpanded"
+                            value='{"LastName": "true"}' />
+                        <core:CustomData key="defaultShowAllFilters" value='{"LastName": "true"}' />
+                    </sfb:customData>
+                </sfb:SmartFilterBar>
+            </DynamicPageHeader>
+        </header>
+        <content>
+            <smartTable:SmartTable
+                id="smartTable"
+                entitySet="Employees"
+                smartFilterId="smartFilterBar"
+                tableType="Table"
+                useTablePersonalisation="true"
+                header="Employees"
+                showRowCount="true">
+                <smartTable:layoutData>
+                    <m:FlexItemData growFactor="1" baseSize="0%" />
+                </smartTable:layoutData>
+                <smartTable:customData>
+                    <core:CustomData key="defaultShowAllFilters" value='{"Employees": "true"}' />
+                    <core:CustomData key="defaultFilterBarExpanded" value='{"Employees": "true"}' />
+                </smartTable:customData>
+            </smartTable:SmartTable>
+        </content>
+    </DynamicPage>
 </mvc:View>
+   
