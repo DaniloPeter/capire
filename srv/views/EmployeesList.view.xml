@@ -6,6 +6,7 @@
     xmlns:sfb="sap.ui.comp.smartfilterbar"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:sv="sap.ui.comp.smartvariants"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     height="100%">
     <DynamicPage id="dynamicPage" fitContent="true">
         <header>
@@ -13,14 +14,13 @@
                 <sfb:SmartFilterBar
                     id="smartFilterBar"
                     entitySet="Employees"
-                    enableBasicSearch="true"
-                    basicSearchFieldName="LastName"
-                    persistencyKey="UniqueAndStablePersistencyKey">
-                    <sfb:customData>
-                        <core:CustomData key="defaultFilterBarExpanded"
-                            value='{"LastName": "true"}' />
-                        <core:CustomData key="defaultShowAllFilters" value='{"LastName": "true"}' />
-                    </sfb:customData>
+                    persistencyKey="SmartFilter_Explored">
+                    <sfb:controlConfiguration>
+                        <sfb:ControlConfiguration key="LastName" visibleInAdvancedArea="true" />
+                        <sfb:ControlConfiguration key="FirstName" visibleInAdvancedArea="true" />
+                        <sfb:ControlConfiguration key="HireDate" visibleInAdvancedArea="true" />
+                        <sfb:ControlConfiguration key="BirthDate" visibleInAdvancedArea="true" />
+                    </sfb:controlConfiguration>
                 </sfb:SmartFilterBar>
             </DynamicPageHeader>
         </header>
@@ -30,16 +30,22 @@
                 entitySet="Employees"
                 smartFilterId="smartFilterBar"
                 tableType="Table"
+                enableAutoBinding="true"
+                enableAutoColumnWidth="true"
+                useVariantManagement="false"
+                initiallyVisibleFields="LastName,FirstName,BirthDate,HireDate"
                 useTablePersonalisation="true"
                 header="Employees"
+                editTogglable="true" app:useSmartToggle="true"
                 showRowCount="true">
+                <m:HBox>
+                    <m:Button text="" icon="sap-icon://add"></m:Button>
+                    <m:Button text="" icon="sap-icon://delete"></m:Button>
+                    <m:Button text="" icon="sap-icon://edit"></m:Button>
+                </m:HBox>
                 <smartTable:layoutData>
                     <m:FlexItemData growFactor="1" baseSize="0%" />
                 </smartTable:layoutData>
-                <smartTable:customData>
-                    <core:CustomData key="defaultShowAllFilters" value='{"Employees": "true"}' />
-                    <core:CustomData key="defaultFilterBarExpanded" value='{"Employees": "true"}' />
-                </smartTable:customData>
             </smartTable:SmartTable>
         </content>
     </DynamicPage>
