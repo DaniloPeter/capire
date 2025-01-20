@@ -39,8 +39,8 @@
                 editTogglable="true" app:useSmartToggle="true"
                 showRowCount="true">
                 <m:HBox>
-                    <m:Button text="" icon="sap-icon://add"></m:Button>
-                    <m:Button text="" icon="sap-icon://delete"></m:Button>
+                    <m:Button text="" icon="sap-icon://add" press="onAddButtonPress"></m:Button>
+                    <m:Button text="" icon="sap-icon://delete" press="onDeleteButtonPress"></m:Button>
                     <m:Button text="" icon="sap-icon://edit"></m:Button>
                 </m:HBox>
                 <smartTable:layoutData>
