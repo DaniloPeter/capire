@@ -4,7 +4,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
     oHelpDialog: null,
     oResponsibleDialog: null,
 
-    onInit: async function () {
+    async onInit() {
       const oModel = this.getOwnerComponent().getModel();
 
       const oResponse = await new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
       this._oSmartFilterBar = this.byId("smartFilterBar");
     },
 
-    onAddButtonPress: async function () {
+    async onAddButtonPress() {
       const oModel = this.getOwnerComponent().getModel();
       const oData = {
         LastName: "Test24",
@@ -53,10 +53,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
       });
     },
 
-    onDeleteButtonPress: async function () {
+    async onDeleteButtonPress() {
       const oModel = this.getOwnerComponent().getModel();
       const oTable = this.byId("smartTable");
-      debugger;
       // const oSelectedItem = oTable.getSelectedItem();
       // if (oSelectedItem) {
       //   const oContext = oSelectedItem.getBindingContext();
@@ -73,6 +72,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
       });
 
       oTable.refresh();
+    },
+
+    onEditToggled(oEvent) {
+      const bEditMode = oEvent.getParameter("editable"); // true, если редактирование включено, false — если выключено
+      const oTable = this.byId("smartTable");
+      const aItems = oTable.getItems();
+      debugger;
     },
   });
 });

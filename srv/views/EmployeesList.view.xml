@@ -37,11 +37,11 @@
                 useTablePersonalisation="true"
                 header="Employees"
                 editTogglable="true" app:useSmartToggle="true"
-                showRowCount="true">
+                showRowCount="true"
+                editToggled="onEditToggled">
                 <m:HBox>
                     <m:Button text="" icon="sap-icon://add" press="onAddButtonPress"></m:Button>
                     <m:Button text="" icon="sap-icon://delete" press="onDeleteButtonPress"></m:Button>
-                    <m:Button text="" icon="sap-icon://edit"></m:Button>
                 </m:HBox>
                 <smartTable:layoutData>
                     <m:FlexItemData growFactor="1" baseSize="0%" />
