@@ -4,25 +4,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
     oHelpDialog: null,
     oResponsibleDialog: null,
 
-    async onInit() {
-      const oModel = this.getOwnerComponent().getModel();
-
-      const oResponse = await new Promise((resolve, reject) => {
-        oModel.read("/Employees(2)", {
-          success: function (oData, oResponse) {
-            resolve(oData);
-          },
-          error: function (oError) {
-            reject(oError);
-          },
-        });
-      });
-      this._oSmartFilterBar = this.byId("smartFilterBar");
-    },
+    async onInit() {},
 
     async onAddButtonPress() {
       const oModel = this.getOwnerComponent().getModel();
       const oData = {
+        ID: 159,
         LastName: "Test24",
         FirstName: "Employee",
         Title: "Sales Representative",
@@ -41,16 +28,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
         ReportsTo: 2,
       };
 
-      const oResponse = await new Promise((resolve, reject) => {
-        oModel.create("/Employees", oData, {
-          success: function (oData, oResponse) {
-            resolve(oData);
-          },
-          error: function (oError) {
-            reject(oError);
-          },
-        });
-      });
+      try {
+        const oResponse = await oModel.create("/Employees", oData);
+        console.log(`ID: ${oResponse.ID}`);
+      } catch (oError) {
+        console.error(`${oError.message}`);
+      }
     },
 
     async onDeleteButtonPress() {
@@ -61,7 +44,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
       //   const oContext = oSelectedItem.getBindingContext();
       //   const oData = oContext.getObject();
       const oResponse = await new Promise((resolve, reject) => {
-        oModel.remove("/Employees(2)", {
+        oModel.remove("/Employees(3)", {
           success: function () {
             resolve();
           },
@@ -70,15 +53,42 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], (Controller) => {
           },
         });
       });
-
-      oTable.refresh();
     },
 
-    onEditToggled(oEvent) {
-      const bEditMode = oEvent.getParameter("editable"); // true, если редактирование включено, false — если выключено
-      const oTable = this.byId("smartTable");
-      const aItems = oTable.getItems();
-      debugger;
+    async onEditToggled(oEvent) {
+      const oModel = this.getOwnerComponent().getModel();
+
+      // Данные для обновления
+      const oData = {
+        LastName: "UpdatedLastName",
+        FirstName: "UpdatedFirstName",
+        Title: "UpdatedTitle",
+        // Добавьте другие поля, которые нужно обновить
+      };
+
+      // ID сотрудника, которого нужно обновить
+      const sEmployeeId = "4"; // Замените на актуальный ID
+
+      try {
+        const oResponse = await new Promise((resolve, reject) => {
+          oModel.update(`/Employees(${sEmployeeId})`, oData, {
+            success: function (oData, oResponse) {
+              resolve(oData);
+            },
+            error: function (oError) {
+              reject(oError);
+            },
+          });
+        });
+
+        // Обработка успешного обновления
+        sap.m.MessageBox.success("Данные успешно обновлены");
+      } catch (oError) {
+        // Обработка ошибки
+        sap.m.MessageBox.error(
+          "Ошибка при обновлении данных: " + oError.message
+        );
+      }
     },
   });
 });

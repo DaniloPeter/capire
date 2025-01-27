@@ -1,4 +1,5 @@
 namespace my.testapp;
+using { cuid, managed } from '@sap/cds/common';
 
 using { ServerSideRendering } from 'ui5-cap-serverside-rendering-plugin';
 
