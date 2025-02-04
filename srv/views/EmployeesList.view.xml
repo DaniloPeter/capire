@@ -36,6 +36,7 @@
                 initiallyVisibleFields="LastName,FirstName,BirthDate,HireDate"
                 useTablePersonalisation="true"
                 header="Employees"
+                
                 editTogglable="true" app:useSmartToggle="true"
                 showRowCount="true"
                 editToggled="onEditToggled">

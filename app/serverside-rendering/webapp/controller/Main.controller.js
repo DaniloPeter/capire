@@ -6,7 +6,16 @@ sap.ui.define(
       oHelpDialog: null,
       oResponsibleDialog: null,
 
-      async onInit() {},
+      onInit() {
+        var oSmartTable = this.byId("smartTable");
+
+        oSmartTable.attachFieldChange(function (oEvent) {
+          const sValue =
+            oEvent.getParameter("changeEvent").mParameters.newValue;
+
+          console.log(sValue);
+        });
+      },
 
       async onAddButtonPress() {
         const oModel = this.getOwnerComponent().getModel();
