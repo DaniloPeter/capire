@@ -91,6 +91,12 @@
           "earlyRequests": true,
           "useBatch": "true"
         }
+      },
+      "internalDataSource": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "editMode": false
+        }
       }
     },
     "resources": {

@@ -17,6 +17,14 @@
     "@sap/cds-dk": "^8",
     "cds-plugin-ui5": "^0.11.1"
   },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "model": "*"
+      }
+    }
+  },
   "scripts": {
     "start": "cds-serve"
   },
