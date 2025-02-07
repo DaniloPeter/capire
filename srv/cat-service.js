@@ -35,6 +35,27 @@ module.exports = class CatalogService extends cds.ApplicationService {
       }
     });
 
+    // this.on("restoreFromBackup", async (req) => {
+    //   const tx = db.tx(req);
+    //   try {
+    //     await tx.run(DELETE.from("my.testapp.Employees"));
+    //     const tempEmployees = await tx.run(
+    //       SELECT.from("my.testapp.TempEmployees")
+    //     );
+    //     if (tempEmployees.length) {
+    //       await tx.run(
+    //         INSERT.into("my.testapp.Employees").entries(tempEmployees)
+    //       );
+    //     }
+    //     await tx.run(DELETE.from("my.testapp.TempEmployees"));
+    //     await tx.commit();
+    //     return { restored: tempEmployees.length };
+    //   } catch (e) {
+    //     await tx.rollback();
+    //     req.error(500, e.message);
+    //   }
+    // });
+
     return super.init();
   }
 };
