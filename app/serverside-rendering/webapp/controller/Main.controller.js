@@ -7,14 +7,12 @@ sap.ui.define(
       oResponsibleDialog: null,
 
       onInit() {
-        var oSmartTable = this.byId("smartTable");
-
-        oSmartTable.attachFieldChange(function (oEvent) {
-          const sValue =
-            oEvent.getParameter("changeEvent").mParameters.newValue;
-
-          console.log(sValue);
-        });
+        // var oSmartTable = this.byId("smartTable");
+        // oSmartTable.attachFieldChange(function (oEvent) {
+        //   const sValue =
+        //     oEvent.getParameter("changeEvent").mParameters.newValue;
+        //   console.log(sValue);
+        // });
       },
 
       async onAddButtonPress() {
@@ -61,7 +59,7 @@ sap.ui.define(
             ReportsTo: 2,
           };
           debugger;
-          const oNewEntry = oModel.createEntry("/Employees");
+          // const oNewEntry = oModel.createEntry("/Employees");
 
           // Добавляем новое значение в oModel для редактирования
           oModel.setProperty("LastName", ""); // Здесь вы можете задать временные значения, если нужно
@@ -144,24 +142,93 @@ sap.ui.define(
 
         const oTable = this.byId("smartTable").getTable();
         const oModel = oTable.getModel();
+        debugger;
 
         if (!oModel.hasPendingChanges()) {
           sap.m.MessageBox.show("Нет изменений для сохранения");
           oIntModel.setProperty("/editMode", false);
           return;
         }
+
+        try {
+          await new Promise((resolve, reject) => {
+            oModel.submitChanges({
+              success: function (oData) {
+                resolve(oData);
+              },
+              error: function (oError) {
+                reject(oError);
+              },
+            });
+          });
+          sap.m.MessageBox.success("Изменения успешно сохранены");
+          oTable.getBinding("rows").refresh();
+        } catch (oError) {
+          console.error("Ошибка сохранения:", oError);
+          sap.m.MessageBox.error(
+            "Ошибка при сохранении изменений: " + oError.message
+          );
+        } finally {
+          oIntModel.setProperty("/editMode", false);
+        }
       },
 
-      onFieldChange(oEvent) {
-        const oInput = oEvent.getSource();
-        const sPath = oInput.getBindingInfo("value").parts[0].path; // Получаем путь к модели
-        const oContext = oInput.getBindingContext();
+      async onDeleteAndAdd() {
+        const oModel = this.getView().getModel();
+        debugger;
+        const oSlider = this.byId("rangeSlider");
+        const oSliderValues = oSlider.getRange();
+        const n = oSliderValues[0];
 
-        // Получаем новое значение поля
-        const newValue = oInput.getValue();
+        try {
+          const response = await new Promise((resolve, reject) => {
+            oModel.callFunction("/deleteAndBackup", {
+              method: "POST",
+              success: resolve,
+              error: reject,
+            });
+          });
 
-        // Обновляем соответствующее значение в модели
-        this.getView().getModel().setProperty(sPath, newValue, oContext);
+          const deletedCount = response.deleteAndBackup.deleted;
+          let addedCount = 0;
+
+          for (let i = 1; i <= n; i++) {
+            const oData = {
+              ID: i,
+              LastName: "New " + i,
+              FirstName: "Employee " + i,
+              Title: "Sales Representative",
+              TitleOfCourtesy: "Ms.",
+              BirthDate: "/Date(-664761600000)/",
+              HireDate: "/Date(704678400000)/",
+              Address: "507 - 20th Ave. E. Apt. 2A",
+              City: "Seattle",
+              Region: "WA",
+              PostalCode: "98122",
+              Country: "USA",
+              HomePhone: "(206) 555-9857",
+              Extension: "5467",
+              Notes: "New employee " + i,
+              ReportsTo: 2,
+            };
+
+            await new Promise((resolve, reject) => {
+              oModel.create("/Employees", oData, {
+                success: () => {
+                  addedCount++;
+                  resolve();
+                },
+                error: (err) => reject(err),
+              });
+            });
+          }
+          this.byId("smartTable").getTable().getBinding("rows").refresh();
+          MessageBox.show(
+            `Deleted ${deletedCount} records. Added ${addedCount} new records.`
+          );
+        } catch (error) {
+          MessageBox.show("Error: " + error.message);
+        }
       },
     });
   }
