@@ -19,7 +19,6 @@ module.exports = class CatalogService extends cds.ApplicationService {
 
     this.on("deleteAndBackup", async (req) => {
       const tx = db.tx(req);
-      debugger;
       const { n } = req.data;
       if (!n || typeof n !== "number" || n <= 0) {
         req.error(400, "Invalid parameter 'n'. It must be a positive integer.");

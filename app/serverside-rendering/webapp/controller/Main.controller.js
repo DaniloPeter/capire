@@ -193,6 +193,7 @@ sap.ui.define(
               error: reject,
             });
           });
+          debugger;
 
           const deletedCount = response.deleted;
           MessageBox.show(
@@ -214,7 +215,9 @@ sap.ui.define(
             });
           });
 
-          const restoredCount = response.restored;
+          const restoredCount = response.restoreFromBackup.restored;
+          this.byId("smartTable").getTable().getBinding("rows").refresh();
+
           MessageBox.show(`Restored ${restoredCount} records`);
         } catch (error) {
           MessageBox.show("Error: " + error.message);
