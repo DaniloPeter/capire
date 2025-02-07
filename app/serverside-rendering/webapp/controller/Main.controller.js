@@ -180,7 +180,6 @@ sap.ui.define(
 
       async onDeleteAndAdd() {
         const oModel = this.getView().getModel();
-        debugger;
         const oSlider = this.byId("rangeSlider");
         const oSliderValues = oSlider.getRange();
         const n = oSliderValues[0];
@@ -189,47 +188,15 @@ sap.ui.define(
           const response = await new Promise((resolve, reject) => {
             oModel.callFunction("/deleteAndBackup", {
               method: "POST",
+              urlParameters: { n },
               success: resolve,
               error: reject,
             });
           });
 
-          const deletedCount = response.deleteAndBackup.deleted;
-          let addedCount = 0;
-
-          for (let i = 1; i <= n; i++) {
-            const oData = {
-              ID: i,
-              LastName: "New " + i,
-              FirstName: "Employee " + i,
-              Title: "Sales Representative",
-              TitleOfCourtesy: "Ms.",
-              BirthDate: "/Date(-664761600000)/",
-              HireDate: "/Date(704678400000)/",
-              Address: "507 - 20th Ave. E. Apt. 2A",
-              City: "Seattle",
-              Region: "WA",
-              PostalCode: "98122",
-              Country: "USA",
-              HomePhone: "(206) 555-9857",
-              Extension: "5467",
-              Notes: "New employee " + i,
-              ReportsTo: 2,
-            };
-
-            await new Promise((resolve, reject) => {
-              oModel.create("/Employees", oData, {
-                success: () => {
-                  addedCount++;
-                  resolve();
-                },
-                error: (err) => reject(err),
-              });
-            });
-          }
-          this.byId("smartTable").getTable().getBinding("rows").refresh();
+          const deletedCount = response.deleted;
           MessageBox.show(
-            `Deleted ${deletedCount} records. Added ${addedCount} new records.`
+            `Deleted ${deletedCount} records and added ${n} new records.`
           );
         } catch (error) {
           MessageBox.show("Error: " + error.message);
@@ -246,8 +213,8 @@ sap.ui.define(
               error: reject,
             });
           });
-          const restoredCount = response.restoreFromBackup.restored;
-          debugger;
+
+          const restoredCount = response.restored;
           MessageBox.show(`Restored ${restoredCount} records`);
         } catch (error) {
           MessageBox.show("Error: " + error.message);
