@@ -7,14 +7,17 @@ sap.ui.define(
       oResponsibleDialog: null,
 
       onInit() {
-        var oSmartTable = this.byId("smartTable");
-
-        oSmartTable.attachFieldChange(function (oEvent) {
-          const sValue =
-            oEvent.getParameter("changeEvent").mParameters.newValue;
-
-          console.log(sValue);
-        });
+        // var oSmartTable = this.byId("smartTable");
+        // oSmartTable.attachFieldChange(function (oEvent) {
+        //   const oSource = oEvent.getParameter("changeEvent").getSource();
+        //   const sValue = oSource.getValue(); // String value
+        //   const sValuePath = oSource.getBinding("value").sPath; // имя поля
+        //   const oBindingContext = oSource.getBindingContext();
+        //   const oModel = oBindingContext.getModel();
+        //   const sPath = oBindingContext.getPath(); // '/Employees()'
+        //   debugger;
+        //   oModel.setProperty(sPath + "/" + sValuePath, sValue);
+        // });
       },
 
       async onAddButtonPress() {
@@ -60,12 +63,12 @@ sap.ui.define(
               'Education includes a BA in psychology from Colorado State University in 1970. She also completed "The Art of the Cold Call." Nancy is a member of Toastmasters International.',
             ReportsTo: 2,
           };
-          debugger;
-          const oNewEntry = oModel.createEntry("/Employees");
+          // debugger;
+          // const oNewEntry = oModel.createEntry("/Employees");
 
-          // Добавляем новое значение в oModel для редактирования
-          oModel.setProperty("LastName", ""); // Здесь вы можете задать временные значения, если нужно
-          oModel.setProperty("FirstName", "");
+          // // Добавляем новое значение в oModel для редактирования
+          // oModel.setProperty("LastName", ""); // Здесь вы можете задать временные значения, если нужно
+          // oModel.setProperty("FirstName", "");
 
           oModel.create("/Employees", oData, {
             success: function (oData, oResponse) {

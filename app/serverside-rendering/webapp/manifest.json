@@ -85,6 +85,7 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {
+          "defaultBindingMode": "TwoWay",
           "synchronizationMode": "None",
           "operationMode": "Server",
           "autoExpandSelect": true,

@@ -36,16 +36,22 @@
                 initiallyVisibleFields="LastName,FirstName,BirthDate,HireDate"
                 useTablePersonalisation="true"
                 header="Employees"
-                
                 editTogglable="true" app:useSmartToggle="true"
                 showRowCount="true"
                 editToggled="onEditToggled">
                 <m:HBox>
-                    <m:Button text="" icon="sap-icon://add" press="onAddButtonPress"></m:Button>
-                    <m:Button text="" icon="sap-icon://delete" press="onRemoveRow"></m:Button>
-                    <m:Button text="Удалить все и добавить" press="onDeleteAllAndAdd"></m:Button>
-                    <m:RangeSlider id="rangeSlider" min="1" max="10" step="1" value="1" />
-                    <m:Button text="Восстановить все" press="onRestoreAll"></m:Button>
+                    <m:Button enabled="{= ${internalDataSource>/editMode}}" text=""
+                        icon="sap-icon://add" press="onAddButtonPress"></m:Button>
+                    <m:Button enabled="{= ${internalDataSource>/editMode}}" text=""
+                        icon="sap-icon://delete" press="onRemoveRow"></m:Button>
+                    <m:Button enabled="{= ${internalDataSource>/editMode}}"
+                        text="Удалить все и добавить"
+                        press="onDeleteAllAndAdd"></m:Button>
+                    <m:RangeSlider showAdvancedTooltip="true"
+                        enabled="{= ${internalDataSource>/editMode}}" id="rangeSlider"
+                        min="1" max="10" step="1" range="1,1" />
+                    <m:Button enabled="{= ${internalDataSource>/editMode}}" text="Восстановить все"
+                        press="onRestoreAll"></m:Button>
                 </m:HBox>
                 <smartTable:layoutData>
                     <m:FlexItemData growFactor="1" baseSize="0%" />

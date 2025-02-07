@@ -20,3 +20,22 @@ entity Employees@(ServerSideRenderingType:'view'):ServerSideRendering {
   Notes : String;
   ReportsTo : Integer;
 }
+
+entity TempEmployees@(ServerSideRenderingType:'view'):ServerSideRendering {
+  key ID : Integer;
+  LastName : String;
+  FirstName : String;
+  Title : String;
+  TitleOfCourtesy : String;
+  BirthDate : Date;
+  HireDate : Date;
+  Address : String;
+  City : String;
+  Region : String;
+  PostalCode : String;
+  Country : String;
+  HomePhone : String;
+  Extension : String;
+  Notes : String;
+  ReportsTo : Integer;
+}
