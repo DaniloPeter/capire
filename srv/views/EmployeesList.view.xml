@@ -46,7 +46,7 @@
                         icon="sap-icon://delete" press="onRemoveRow"></m:Button>
                     <m:Button enabled="{= ${internalDataSource>/editMode}}"
                         text="Удалить все и добавить"
-                        press="onDeleteAllAndAdd"></m:Button>
+                        press="onDeleteAndAdd"></m:Button>
                     <m:RangeSlider showAdvancedTooltip="true"
                         enabled="{= ${internalDataSource>/editMode}}" id="rangeSlider"
                         min="1" max="10" step="1" range="1,1" />

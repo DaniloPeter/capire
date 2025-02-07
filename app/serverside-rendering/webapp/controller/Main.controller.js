@@ -91,7 +91,7 @@ sap.ui.define(
         }
       },
 
-      async onRemoveRow(oEvent) {
+      async onRemoveRow() {
         const oTable = this.byId("smartTable").getTable();
         const oModel = oTable.getModel();
         const aSelectedIndices = oTable.getSelectedIndices();
@@ -231,6 +231,24 @@ sap.ui.define(
           MessageBox.show(
             `Deleted ${deletedCount} records. Added ${addedCount} new records.`
           );
+        } catch (error) {
+          MessageBox.show("Error: " + error.message);
+        }
+      },
+
+      async onRestoreAll() {
+        const oModel = this.getView().getModel();
+        try {
+          const response = await new Promise((resolve, reject) => {
+            oModel.callFunction("/restoreFromBackup", {
+              method: "POST",
+              success: resolve,
+              error: reject,
+            });
+          });
+          const restoredCount = response.restoreFromBackup.restored;
+          debugger;
+          MessageBox.show(`Restored ${restoredCount} records`);
         } catch (error) {
           MessageBox.show("Error: " + error.message);
         }
