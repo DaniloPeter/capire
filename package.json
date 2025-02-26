@@ -7,7 +7,6 @@
   "private": true,
   "dependencies": {
     "@cap-js-community/odata-v2-adapter": "^1.14.0",
-    "@sap/cds": "^8.7.0",
     "express": "^4",
     "npm": "^11.1.0",
     "sqlite": "^5.1.1",
@@ -16,8 +15,12 @@
   "devDependencies": {
     "@cap-js/cds-types": "^0.6",
     "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^8",
-    "cds-plugin-ui5": "^0.11.1"
+    "@sap/cds": "^8.7.2",
+    "@sap/cds-dk": "^8.7.3",
+    "@sap/cds-mtxs": "^2.5.1",
+    "@ui5/cli": "^4.0.13",
+    "cds-plugin-ui5": "^0.11.1",
+    "cds-test": "^1.0.5"
   },
   "cds": {
     "requires": {

@@ -63,13 +63,6 @@ sap.ui.define(
               'Education includes a BA in psychology from Colorado State University in 1970. She also completed "The Art of the Cold Call." Nancy is a member of Toastmasters International.',
             ReportsTo: 2,
           };
-          // debugger;
-          // const oNewEntry = oModel.createEntry("/Employees");
-
-          // // Добавляем новое значение в oModel для редактирования
-          // oModel.setProperty("LastName", ""); // Здесь вы можете задать временные значения, если нужно
-          // oModel.setProperty("FirstName", "");
-
           oModel.create("/Employees", oData, {
             success: function (oData, oResponse) {
               sap.m.MessageBox.success(
@@ -196,6 +189,7 @@ sap.ui.define(
           debugger;
 
           const deletedCount = response.deleted;
+          this.byId("smartTable").getTable().getBinding("rows").refresh();
           MessageBox.show(
             `Deleted ${deletedCount} records and added ${n} new records.`
           );
