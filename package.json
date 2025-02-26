@@ -31,6 +31,7 @@
     }
   },
   "scripts": {
+    "setup": "npm install && cds deploy && npm start",
     "start": "cds-serve"
   },
   "workspaces": [
