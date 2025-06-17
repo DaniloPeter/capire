@@ -1,25 +1,87 @@
-# Getting Started
+# SAPUI5 CAP Server-Side Rendering
 
-Welcome to your new project.
+This project demonstrates a **Server-Side Rendering (SSR)** implementation using SAP's Cloud Application Programming Model (CAP) and SAPUI5.
 
-It contains these folders and files, following our recommended project layout:
+## Project Structure
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`package.json` | project metadata and configuration
-`readme.md` | this getting started guide
+```
+capire/
+├── app/
+│   └── serverside-rendering/     # SAPUI5 frontend application
+│       ├── webapp/               # UI5 application files
+│       ├── package.json          # Frontend dependencies
+│       └── ui5.yaml             # UI5 build configuration
+├── db/
+│   ├── schema.cds               # CAP data model definitions
+│   └── data/                    # Sample data files
+│       ├── my.testapp-Employees.csv
+│       └── my.testapp-TempEmployees.csv
+├── srv/
+│   ├── cat-service.cds          # Service definitions
+│   ├── cat-service.js           # Service implementation
+│   └── views/                   # Service views
+├── test/                        # Test files
+├── package.json                 # Main project configuration
+└── mta.yaml                     # Multi-Target Application configuration
+```
 
+- **Backend**: SAP Cloud Application Programming Model (CAP)
+- **Frontend**: SAPUI5 1.124.0 with TypeScript
+- **Database**: SQLite
+- **Build Tools**: UI5 Tooling, CDS Development Kit
+- **Server-Side Rendering**: `ui5-cap-serverside-rendering-plugin`
 
-## Next Steps
+### 1. Install Dependencies
 
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start adding content, for example, a [db/schema.cds](db/schema.cds).
+```bash
+npm install
+```
 
+### 2. Deploy Database Schema
 
-## Learn More
+```bash
+cds deploy
+```
 
-Learn more at https://cap.cloud.sap/docs/get-started/.
+### 3. Start the Application
+
+```bash
+npm start
+```
+
+### 4. Access the Application
+
+- **CAP Service**: http://localhost:4004/odata/v4/catalog/
+- **UI5 Application**: http://localhost:4004/be.wl.serversiderendering/index.html
+- **OData v2**: http://localhost:4004/odata/v2/catalog/
+
+## Data Model
+
+The application manages employee data with the following entities:
+
+### Employees Entity
+
+- **ID**: Primary key (Integer)
+- **Personal Info**: FirstName, LastName, Title, TitleOfCourtesy
+- **Dates**: BirthDate, HireDate
+- **Contact**: Address, City, Region, PostalCode, Country, HomePhone, Extension
+- **Additional**: Notes, ReportsTo
+
+### TempEmployees Entity
+
+- Backup entity with identical structure for data management operations
+
+## Available Services
+
+### CatalogService
+
+- **Employees**: CRUD operations for employee data
+- **TempEmployees**: Backup employee data management
+- **deleteAndBackup(n)**: Deletes n employees and backs them up
+- **restoreFromBackup()**: Restores employees from backup
+
+### Local Development
+
+```bash
+cds watch
+```
